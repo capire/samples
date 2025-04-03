@@ -28,7 +28,7 @@ Click on the *[/vue](http:/localhost:4004/vue)* link at the top to display the b
 
 ## Grow as you go...
 
-After the jumpstart, have a look into the enclosed sub folders/projects, which are:
+After the jumpstart, open in VS Code, e.g. `code .`, and inspect the enclosed sub folders/projects, which are:
 
 - [bookshop](bookshop) – a simplistic [primer app](https://cap.cloud.sap/docs/get-started/in-a-nutshell)
 - [reviews](reviews) - a generic reuse service
