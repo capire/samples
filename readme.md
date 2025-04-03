@@ -32,7 +32,7 @@ After the jumpstart, have a look into the enclosed sub folders/projects, which a
 - [bookshop](bookshop) – a simplistic [primer app](https://cap.cloud.sap/docs/get-started/in-a-nutshell)
 - [reviews](reviews) - a generic reuse service
 - [orders](orders) - a generic reuse service
-- [common](common) - a reuse content package
+- [common](etc/common) - a reuse content package
 - [bookstore](bookstore) - a composite app of the above
 - [fiori](fiori) - Fiori elements UIs for the bookstore
 - [etc/*](etc) - Plugins adding cross-cutting concerns
