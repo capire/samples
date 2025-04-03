@@ -1,0 +1,37 @@
+{
+  "name": "@capire/samples",
+  "version": "3.0.0",
+  "description": "A monorepo with several samples for CAP.",
+  "repository": "https://github.com/sap-samples/cloud-cap-samples.git",
+  "author": "daniel.hutzel@sap.com",
+  "workspaces": [
+    "./*",
+    "./etc/*"
+  ],
+  "devDependencies": {
+    "@cap-js/cds-test": "^0"
+  },
+  "scripts": {
+    "start": "cds watch bookshop --open http://localhost:4004",
+    "bookstore": "cds watch bookstore",
+    "bookshop": "cds watch bookshop",
+    "fiori": "cds watch fiori",
+    "orders": "cds watch orders",
+    "reviews": "cds watch reviews",
+    "lint": "npx eslint",
+    "test": "chest test",
+    "jest": "npx jest",
+    "mocha": "npx mocha",
+    "node:test": "node --test",
+    "build": "mbt build -t gen --mtar mta.tar",
+    "deploy": "cf deploy gen/mta.tar",
+    "undeploy": "cf undeploy capire.samples --delete-services --delete-service-keys"
+  },
+  "mocha": {
+    "recursive": true,
+    "parallel": true,
+    "timeout": 6666
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "private": true
+}
