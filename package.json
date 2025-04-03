@@ -12,6 +12,7 @@
     "@cap-js/cds-test": "^0"
   },
   "scripts": {
+    "latest": "git submodule foreach git checkout main",
     "start": "cds watch bookshop --open http://localhost:4004",
     "bookstore": "cds watch bookstore",
     "bookshop": "cds watch bookshop",
