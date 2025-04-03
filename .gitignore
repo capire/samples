@@ -1,13 +1,13 @@
-gen/
-_out/
-mta_archives/
-node_modules/
+**/gen/
+**/_out/
+**/mta_archives/
+**/node_modules/
 
-.DS_Store
-*.sqlite
-*.db
-*.log
-*.mtar
+**/.DS_Store
+**/*.sqlite
+**/*.db
+**/*.log
+**/*.mtar
 
-@types/
-@cds-models/
+**/@types/
+**/@cds-models/
