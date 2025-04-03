@@ -4,14 +4,13 @@
 
 Find here a collection of samples for the [SAP Cloud Application Programming Model](https://cap.cloud.sap) organized in a simplistic [monorepo setup](samples.md#all-in-one-monorepo).
 
-![](https://github.com/SAP-samples/cloud-cap-samples/workflows/CI/badge.svg)
 
 ## Get Started
 
 Assumed you did your [initial setup of CAP Node.js](https://cap.cloud.sap/docs/get-started/#setup), simply copy & paste these lines to a terminal for a jumpstart:
-    
+
 ```sh
-git clone -q https://github.com/sap-samples/cloud-cap-samples cap/samples
+git clone -q -j9 --recursive https://github.com/capire/samples cap/samples
 cd cap/samples
 npm install
 npm test

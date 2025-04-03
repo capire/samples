@@ -23,7 +23,7 @@
       "scope-references": [
         "$XSAPPNAME.admin"
       ],
-      "description": "cloud-cap-samples bookstore admin"
+      "description": "capire/samples bookstore admin"
     }
   ],
   "authorities-inheritance": false,
