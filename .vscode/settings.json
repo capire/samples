@@ -1,9 +1,9 @@
 {
   "workbench.startupEditor": "readme",
   "files.exclude": {
-    "**/node_modules": true,
-    "LICENSES": true,
-    ".reuse": true
+    "**/node_modules": false,
+    "LICENSES": false,
+    ".reuse": false
   },
   "debug.javascript.terminalOptions": {
     "skipFiles": [
