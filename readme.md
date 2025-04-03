@@ -10,7 +10,7 @@ Find here a collection of samples for the [SAP Cloud Application Programming Mod
 Assumed you did your [initial setup of CAP Node.js](https://cap.cloud.sap/docs/get-started/#setup), simply copy & paste these lines to a terminal for a jumpstart:
 
 ```sh
-git clone -q -j9 --recursive https://github.com/capire/samples cap/samples
+git clone -q -j11 --recursive https://github.com/capire/samples cap/samples
 cd cap/samples
 npm run latest
 npm install
