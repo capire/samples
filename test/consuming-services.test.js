@@ -3,6 +3,8 @@ const { expect } = cds.test ('@capire/bookshop')
 
 describe('cap/samples - Consuming Services locally', () => {
 
+  cds.User.default = cds.User.privileged
+
   it('bootstrapped the database successfully', ()=>{
     const { AdminService } = cds.services
     const { Authors } = AdminService.entities
