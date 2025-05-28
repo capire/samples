@@ -4,9 +4,6 @@
 [submodule "bookstore"]
 	path = bookstore
 	url = https://github.com/capire/bookstore
-[submodule "etc/common"]
-	path = etc/common
-	url = https://github.com/capire/common
 [submodule "reviews"]
 	path = reviews
 	url = https://github.com/capire/reviews
@@ -19,3 +16,9 @@
 [submodule "shared-db"]
 	path = shared-db
 	url = https://github.com/capire/shared-db
+[submodule "common"]
+	path = common
+	url = https://github.com/capire/common
+[submodule "etc/data-viewer"]
+	path = etc/data-viewer
+	url = https://github.com/capire/data-viewer
