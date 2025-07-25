@@ -17,6 +17,7 @@ concurrency:
 
 env:
   APP_NAME: samples
+  FORCE_COLOR: true
 jobs:
   deploy:
     runs-on: ubuntu-latest
