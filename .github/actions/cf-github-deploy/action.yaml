@@ -1,5 +1,5 @@
-name: Cloud Foundry Deployment
-description: "Deploys CAP app to Cloud Foundry and sets up GitHub deployment"
+name: GitHub Deployment for Cloud Foundry
+description: "Creates a GitHub deployment for your Cloud Foundry app"
 
 inputs:
   app-name:
