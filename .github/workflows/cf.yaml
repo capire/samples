@@ -1,0 +1,46 @@
+name: Cloud Foundry
+
+on:
+  workflow_call:
+  workflow_dispatch:
+  merge_group:
+  pull_request: # TODO: remove before merge
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: cf-${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  APP_NAME: samples
+jobs:
+  deploy:
+    runs-on: [self-hosted, ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: ./.github/actions/cf-setup
+        with:
+          cf-api: ${{ vars.CF_API }}
+          cf-org: ${{ vars.CF_ORG }}
+          cf-space: ${{ vars.CF_SPACE }}
+          cf-username: ${{ vars.CF_USERNAME }}
+          cf-password: ${{ secrets.CF_PASSWORD }}
+      - run: npm clean-install
+      - run: npx cds up
+
+      - uses: ./.github/actions/cf-github-deploy
+        with:
+          app-name: ${{ env.APP_NAME }}
+
+      - run: cf logs ${{ env.APP_NAME }} --recent
+      - run: cf logs orders-srv --recent
+      - run: cf logs reviews-srv --recent
+      - run: cf logs bookstore-srv --recent
+      - run: cf logs ${{ env.APP_NAME }}-db-deployer --recent

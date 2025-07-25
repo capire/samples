@@ -1,0 +1,48 @@
+name: Cloud Foundry Deployment
+description: "Deploys CAP app to Cloud Foundry and sets up GitHub deployment"
+
+inputs:
+  app-name:
+    description: "Base name of the deployed CAP app"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get deployed server URL
+      id: get-url
+      shell: bash
+      run: |
+        raw=$(cf app "${{ inputs.app-name }}" | awk '/routes:/ {print $2}')
+        raw=$(echo "$raw" | sed -E 's#^https?://##')
+        echo "url=https://$raw" >> "$GITHUB_OUTPUT"
+
+    - name: Create GitHub Deployment
+      uses: actions/github-script@v7
+      env:
+        URL: ${{ steps.get-url.outputs.url }}
+      with:
+        script: |
+          const { owner, repo } = context.repo
+          const ref = context.ref
+          const url = process.env.URL
+
+          const deployment = await github.rest.repos.createDeployment({
+            owner,
+            repo,
+            ref,
+            required_contexts: [],
+            environment: 'Staging',
+            auto_merge: false,
+            description: 'Deployed to Cloud Foundry',
+          })
+
+          await github.rest.repos.createDeploymentStatus({
+            owner,
+            repo,
+            deployment_id: deployment.data.id,
+            state: 'success',
+            environment_url: url,
+            log_url: `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`,
+            description: 'CAP app is live',
+          })

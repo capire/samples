@@ -1,0 +1,53 @@
+name: Cloud Foundry Setup
+description: "Installs dependencies for Cloud Foundry deployment"
+
+inputs:
+  cf-version:
+    description: "The version of the Cloud Foundry CLI to install"
+    required: false
+    default: "8.8.3"
+  cf-api:
+    description: "The Cloud Foundry API endpoint to connect to"
+    required: true
+  cf-org:
+    description: "The Cloud Foundry organization to target"
+    required: true
+  cf-space:
+    description: "The Cloud Foundry space to target"
+    required: true
+  cf-username:
+    description: "The Cloud Foundry username to authenticate with"
+    required: true
+  cf-password:
+    description: "The Cloud Foundry password to authenticate with"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        set -e
+        echo "Using CF_VERSION=${{ inputs.cf-version }}"
+        echo "Using CF_API=${{ inputs.cf-api }}"
+        curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=${{ inputs.cf-version }}&source=github" -o cf-cli.tgz
+        mkdir cf-cli && tar -xzf cf-cli.tgz -C cf-cli
+        chmod +x cf-cli/cf
+        echo "${PWD}/cf-cli" >> $GITHUB_PATH
+
+    - shell: bash
+      run: |
+        echo "Installing MBT..."
+        npm install -g mbt
+
+    - shell: bash
+      run: |
+        echo "Installing CF CLI multiapps plugin..."
+        cf install-plugin multiapps -f
+
+    - shell: bash
+      run: |
+        echo "Authenticating to Cloud Foundry..."
+        cf api "${{ inputs.cf-api }}"
+        cf auth "${{ inputs.cf-username }}" "${{ inputs.cf-password }}"
+        cf target -o "${{ inputs.cf-org }}" -s "${{ inputs.cf-space }}"
