@@ -4,9 +4,6 @@ on:
   workflow_call:
   workflow_dispatch:
   merge_group:
-  pull_request: # TODO: remove before merge
-    branches:
-      - main
   push:
     branches:
       - main
