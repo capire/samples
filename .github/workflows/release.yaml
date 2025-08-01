@@ -7,12 +7,12 @@ on:
 
 jobs:
   tests:
-    uses: cap-sandbox/samples/.github/workflows/test.yaml@main
+    uses: capire/samples/.github/workflows/test.yaml@main
     secrets: inherit
 
   deploy-cf:
     needs: [tests]
-    uses: cap-sandbox/samples/.github/workflows/cf.yaml@main
+    uses: capire/samples/.github/workflows/cf.yaml@main
     secrets: inherit
     with:
       cf-api: ${{ vars.CF_API_PRODUCTION }}
