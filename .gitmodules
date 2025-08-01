@@ -4,18 +4,18 @@
 [submodule "bookstore"]
 	path = bookstore
 	url = https://github.com/capire/bookstore
-[submodule "reviews"]
-	path = reviews
-	url = https://github.com/capire/reviews
-[submodule "orders"]
-	path = orders
-	url = https://github.com/capire/orders
-[submodule "shared-db"]
-	path = shared-db
-	url = https://github.com/capire/shared-db
 [submodule "common"]
 	path = common
 	url = https://github.com/capire/common
-[submodule "data-viewer"]
+[submodule "orders"]
+	path = orders
+	url = https://github.com/capire/orders
+[submodule "reviews"]
+	path = reviews
+	url = https://github.com/capire/reviews
+[submodule "shared-db"]
+	path = shared-db
+	url = https://github.com/capire/shared-db
+[submodule "inspectr"]
 	path = inspectr
 	url = https://github.com/capire/data-viewer
