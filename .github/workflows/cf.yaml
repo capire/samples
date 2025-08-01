@@ -17,7 +17,7 @@ env:
   FORCE_COLOR: true
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: linux
     steps:
       - uses: actions/checkout@v4
         with:
