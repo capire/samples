@@ -2,6 +2,24 @@ name: Cloud Foundry
 
 on:
   workflow_call:
+    inputs:
+      cf-api:
+        description: 'Cloud Foundry API endpoint'
+        required: true
+        type: string
+      cf-org:
+        description: 'Cloud Foundry organization'
+        required: true
+        type: string
+      cf-space:
+        description: 'Cloud Foundry space'
+        required: true
+        type: string
+      environment:
+        description: 'Deployment environment name'
+        required: true
+        type: string
+
   workflow_dispatch:
   merge_group:
   push:
@@ -27,9 +45,9 @@ jobs:
           node-version: 22
       - uses: ./.github/actions/cf-setup
         with:
-          cf-api: ${{ vars.CF_API }}
-          cf-org: ${{ vars.CF_ORG }}
-          cf-space: ${{ vars.CF_SPACE }}
+          cf-api: ${{ inputs.cf-api || vars.CF_API }}
+          cf-org: ${{ inputs.cf-org || vars.CF_ORG }}
+          cf-space: ${{ inputs.cf-space || vars.CF_SPACE }}
           cf-username: ${{ vars.CF_USERNAME }}
           cf-password: ${{ secrets.CF_PASSWORD }}
       - run: npm clean-install
@@ -38,6 +56,7 @@ jobs:
       - uses: ./.github/actions/cf-github-deploy
         with:
           app-name: ${{ env.APP_NAME }}
+          environment: ${{ inputs.environment || 'Staging' }}
 
       - run: cf logs ${{ env.APP_NAME }} --recent
       - run: cf logs orders-srv --recent
