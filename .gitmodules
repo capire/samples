@@ -10,9 +10,6 @@
 [submodule "orders"]
 	path = orders
 	url = https://github.com/capire/orders
-[submodule "fiori"]
-	path = fiori
-	url = https://github.com/capire/fiori
 [submodule "shared-db"]
 	path = shared-db
 	url = https://github.com/capire/shared-db
@@ -20,5 +17,5 @@
 	path = common
 	url = https://github.com/capire/common
 [submodule "etc/data-viewer"]
-	path = etc/data-viewer
+	path = inspectr
 	url = https://github.com/capire/data-viewer
