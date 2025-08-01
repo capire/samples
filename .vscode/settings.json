@@ -1,16 +1,7 @@
 {
   "workbench.startupEditor": "readme",
   "files.exclude": {
-    "**/node_modules": true,
-    "LICENSES": true,
+    "node_modules": true,
     ".reuse": true
-  },
-  "debug.javascript.terminalOptions": {
-    "skipFiles": [
-      "<node_internals>/**",
-      "**/node_modules/**",
-      "**/cds/lib/req/cds-context.js"
-    ]
-  },
-  "jest.jestCommandLine": "npx jest"
+  }
 }

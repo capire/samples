@@ -5,8 +5,7 @@
   "repository": "https://github.com/capire/samples",
   "author": "daniel.hutzel@sap.com",
   "workspaces": [
-    "./*",
-    "./etc/*"
+    "*"
   ],
   "devDependencies": {
     "@cap-js/cds-test": "^0",
@@ -17,7 +16,6 @@
     "start": "cds watch bookshop --open http://localhost:4004",
     "bookstore": "cds watch bookstore",
     "bookshop": "cds watch bookshop",
-    "fiori": "cds watch fiori",
     "orders": "cds watch orders",
     "reviews": "cds watch reviews",
     "lint": "npx eslint",
