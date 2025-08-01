@@ -5,6 +5,9 @@ inputs:
   app-name:
     description: "Base name of the deployed CAP app"
     required: true
+  environment:
+    description: "Deployment environment name"
+    required: true
 
 runs:
   using: "composite"
@@ -21,18 +24,20 @@ runs:
       uses: actions/github-script@v7
       env:
         URL: ${{ steps.get-url.outputs.url }}
+        ENVIRONMENT: ${{ inputs.environment }}
       with:
         script: |
           const { owner, repo } = context.repo
           const ref = context.ref
           const url = process.env.URL
+          const environment = process.env.ENVIRONMENT
 
           const deployment = await github.rest.repos.createDeployment({
             owner,
             repo,
             ref,
             required_contexts: [],
-            environment: 'Staging',
+            environment,
             auto_merge: false,
             description: 'Deployed to Cloud Foundry',
           })
