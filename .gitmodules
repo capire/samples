@@ -16,6 +16,6 @@
 [submodule "shared-db"]
 	path = shared-db
 	url = https://github.com/capire/shared-db
-[submodule "inspectr"]
-	path = inspectr
+[submodule "data-viewer"]
+	path = support
 	url = https://github.com/capire/data-viewer
