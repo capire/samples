@@ -59,7 +59,12 @@ jobs:
           environment: ${{ inputs.environment || 'Staging' }}
 
       - run: cf logs ${{ env.APP_NAME }} --recent
+        if: always()
       - run: cf logs orders-srv --recent
+        if: always()
       - run: cf logs reviews-srv --recent
+        if: always()
       - run: cf logs bookstore-srv --recent
+        if: always()
       - run: cf logs ${{ env.APP_NAME }}-db-deployer --recent
+        if: always()
