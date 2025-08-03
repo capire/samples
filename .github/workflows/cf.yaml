@@ -5,15 +5,15 @@ on:
     inputs:
       cf-api:
         description: 'Cloud Foundry API endpoint'
-        required: true
+        required: false
         type: string
       cf-org:
         description: 'Cloud Foundry organization'
-        required: true
+        required: false
         type: string
       cf-space:
         description: 'Cloud Foundry space'
-        required: true
+        required: false
         type: string
       environment:
         description: 'Deployment environment name'
