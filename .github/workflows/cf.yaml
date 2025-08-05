@@ -21,7 +21,6 @@ on:
         type: string
 
   workflow_dispatch:
-  pull_request:
   push:
     branches:
       - main
