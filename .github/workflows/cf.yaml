@@ -21,7 +21,6 @@ on:
         type: string
 
   workflow_dispatch:
-  merge_group:
   push:
     branches:
       - main
