@@ -151,7 +151,7 @@ resources:
     parameters:
       service: enterprise-messaging
       service-plan: default
-      path: ./event-mesh.json
+      path: .deploy/event-mesh.json
       config:
         emname: bookstore-${org}-${space}
         namespace: cap/samples/${space}
@@ -167,7 +167,7 @@ resources:
     parameters:
       service: xsuaa
       service-plan: application
-      path: ./xs-security.json
+      path: .deploy/xs-security.json
       config:
         xsappname: samples-${org}-${space}
         tenant-mode: dedicated
