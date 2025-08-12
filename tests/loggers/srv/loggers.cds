@@ -1,4 +1,5 @@
-@rest service LogService {
+
+@rest service LogService @(path:'/log')   {
 
   @readonly entity Loggers : Logger {};
   entity Logger {

@@ -5,15 +5,15 @@ on:
     inputs:
       cf-api:
         description: 'Cloud Foundry API endpoint'
-        required: true
+        required: false
         type: string
       cf-org:
         description: 'Cloud Foundry organization'
-        required: true
+        required: false
         type: string
       cf-space:
         description: 'Cloud Foundry space'
-        required: true
+        required: false
         type: string
       environment:
         description: 'Deployment environment name'
@@ -21,7 +21,6 @@ on:
         type: string
 
   workflow_dispatch:
-  merge_group:
   push:
     branches:
       - main
@@ -59,7 +58,12 @@ jobs:
           environment: ${{ inputs.environment || 'Staging' }}
 
       - run: cf logs ${{ env.APP_NAME }} --recent
+        if: always()
       - run: cf logs orders-srv --recent
+        if: always()
       - run: cf logs reviews-srv --recent
+        if: always()
       - run: cf logs bookstore-srv --recent
+        if: always()
       - run: cf logs ${{ env.APP_NAME }}-db-deployer --recent
+        if: always()

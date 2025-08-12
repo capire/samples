@@ -13,5 +13,13 @@
   "scripts": {
     "start": "cds-serve",
     "watch": "cds watch"
+  },
+  "cds": {
+    "requires": {
+      "db": true
+    },
+    "log": {
+      "service": true
+    }
   }
 }

@@ -2,7 +2,7 @@
 
 # Welcome to cap/samples
 
-Find here a collection of samples for the [SAP Cloud Application Programming Model](https://cap.cloud.sap) organized in a simplistic [monorepo setup](readme/samples.md#all-in-one-monorepo).
+Find here a collection of samples for the [SAP Cloud Application Programming Model](https://cap.cloud.sap) organized in a simplistic [monorepo setup](about/samples.md#all-in-one-monorepo).
 
 ![](https://github.com/SAP-samples/cloud-cap-samples/workflows/CI/badge.svg)
 
@@ -22,7 +22,7 @@ npm start
 After download and setup this starts the bookshop server and opens a browser window on _http://localhost:4004_ looking like that:
 
 <p align="center">
-   <img width=480 src="readme/index-html.png" alt="bookshop showing up in browser" />
+   <img width=480 src="about/index-html.png" alt="bookshop showing up in browser" />
 </p>
 
 Click on the *[/vue](http:/localhost:4004/vue)* link at the top to display the bookshop app (when asked to log in, type `alice` as user and leave the password field blank).
@@ -37,10 +37,10 @@ After the jumpstart, have a look into the enclosed sub folders/projects, which a
 - [common](common) - a reuse content package
 - [bookstore](bookstore) - a composite app of the above
 
-> _see also [samples.md](readme/samples.md)_
+> _[Learn more...](about/samples.md)_
 
 <p align="center">
-  <img width=480 src="readme/samples.drawio.svg">
+  <img width=480 src="about/samples.drawio.svg">
 </p>
 
 ## Get Help

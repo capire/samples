@@ -3,72 +3,58 @@ const { expect } = cds.test.in(__dirname,'..')
 
 describe('cap/samples - Messaging', ()=>{
 
-    const _model = '@capire/reviews'
-    const Reviews = 'sap.capire.reviews.Reviews'
-    beforeAll(()=>{
-        cds.User.default = cds.User.Privileged // hard core monkey patch
-    })
+  const _model = '@capire/reviews'
+  const Reviews = 'sap.capire.reviews.Reviews'
+  beforeAll(()=>{
+    cds.User.default = cds.User.Privileged // hard core monkey patch
+  })
 
-    it ('should bootstrap sqlite in-memory db', async()=>{
-        const db = await cds.deploy (_model) .to ('sqlite::memory:')
-        await db.delete(Reviews)
-        expect (db.model) .not.undefined
-    })
+  it ('should bootstrap sqlite in-memory db', async()=>{
+    const db = await cds.deploy (_model) .to ('sqlite::memory:')
+    await db.delete(Reviews)
+    expect (db.model) .not.undefined
+  })
 
-    let srv
-    it ('should serve ReviewsService', async()=>{
-        srv = await cds.serve('ReviewsService') .from (_model)
-        expect (srv.name) .to.match (/ReviewsService/)
-    })
+  let ReviewsApp, ReviewsService
+  it ('should serve ReviewsService', async()=>{
+    await cds.serve('all') .from (_model)
+    ReviewsApp = await cds.connect.to ('sap.capire.reviews.app.ReviewsService')
+    ReviewsService = await cds.connect.to ('sap.capire.reviews.api.ReviewsService')
+    expect (ReviewsApp) .to.exist
+    expect (ReviewsService) .to.exist
+  })
 
-    let N=0, received=[], M=0
-    it ('should add messaging event handlers', ()=>{
-        srv.on('reviewed', (msg)=> received.push(msg))
-    })
+  let received=[], count=0
+  it ('should add messaging event handlers', ()=>{
+    ReviewsService.on('AverageRatings.Changed', (msg)=> received.push(msg))
+  })
 
-    it ('should add more messaging event handlers', ()=>{
-        srv.on('reviewed', ()=> ++M)
-    })
+  it ('should add more messaging event handlers', ()=>{
+    ReviewsService.on('AverageRatings.Changed', ()=> ++count)
+  })
 
-    it ('should add review', async ()=>{
-        const review = { subject: "201", title: "Captivating", rating: ++N }
-        cds._debug = 1
-        const response = await srv.create ('Reviews') .entries (review)
-        expect (response) .to.containSubset (review)
-    })
+  it ('should add review', async ()=>{
+    const review = { subject: '201', rating: 1 }
+    const response = await ReviewsApp.create ('Reviews', review)
+    expect (response) .to.containSubset (review)
+  })
 
-    it ('should add more reviews', ()=> Promise.all ([
-        // REVISIT: mass operation should trigger one message per entry
-        // srv.create('Reviews').entries(
-        //     { ID: 111 + (++N),  subject: "201", title: "Captivating", rating: N },
-        //     { ID: 111 + (++N),  subject: "201", title: "Captivating", rating: N },
-        //     { ID: 111 + (++N),  subject: "201", title: "Captivating", rating: N },
-        //     { ID: 111 + (++N),  subject: "201", title: "Captivating", rating: N },
-        // ),
-        srv.create ('Reviews') .entries (
-            { ID: String(111 + (++N)),  subject: "201", title: "Captivating", rating: N }
-        ),
-        srv.create ('Reviews') .entries (
-            { ID: String(111 + (++N)),  subject: "201", title: "Captivating", rating: N }
-        ),
-        srv.create ('Reviews') .entries (
-            { ID: String(111 + (++N)),  subject: "201", title: "Captivating", rating: N }
-        ),
-        srv.create ('Reviews') .entries (
-            { ID: String(111 + (++N)),  subject: "201", title: "Captivating", rating: N }
-        ),
-    ]))
+  it ('should add more reviews', ()=> Promise.all ([
+    ReviewsApp.create ('Reviews', { subject: '201', reviewer: `Alice`, rating: 2 }),
+    ReviewsApp.create ('Reviews', { subject: '201', reviewer: `Bob`,   rating: 3 }),
+    ReviewsApp.create ('Reviews', { subject: '201', reviewer: `Carol`, rating: 4 }),
+    ReviewsApp.create ('Reviews', { subject: '201', reviewer: `Dave`,  rating: 5 }),
+  ]))
 
-    it ('should have received all messages', async()=> {
-        await new Promise((done)=>setImmediate(done))
-        expect(M).equals(N)
-        expect(received.length).equals(N)
-        expect(received.map(m=>m.data)).to.deep.equal([
-            { count: 1, subject: '201', rating: 1 },
-            { count: 2, subject: '201', rating: 1.5 },
-            { count: 3, subject: '201', rating: 2 },
-            { count: 4, subject: '201', rating: 2.5 },
-            { count: 5, subject: '201', rating: 3 },
-        ])
-    })
+  it ('should have received all messages', async()=> {
+    await new Promise((done)=>setImmediate(done))
+    expect(count).equals(received.length).equals(5)
+    expect(received.map(m=>m.data)).to.deep.equal([
+      { subject: '201', reviews: 1, rating: 1.0 },
+      { subject: '201', reviews: 2, rating: 1.5 },
+      { subject: '201', reviews: 3, rating: 2.0 },
+      { subject: '201', reviews: 4, rating: 2.5 },
+      { subject: '201', reviews: 5, rating: 3.0 },
+    ])
+  })
 })
