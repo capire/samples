@@ -36,6 +36,18 @@
       "target": "/reviews/$1",
       "destination": "reviews-api",
       "csrfProtection": true
+    },
+    {
+      "source": "^/rest/catalog/(.*)$",
+      "target": "/rest/catalog/$1",
+      "destination": "bookstore-api",
+      "csrfProtection": true
+    },
+    {
+      "source": "^/rest/reviews/(.*)$",
+      "target": "/rest/reviews/$1",
+      "destination": "reviews-api",
+      "csrfProtection": true
     }
   ]
 }
