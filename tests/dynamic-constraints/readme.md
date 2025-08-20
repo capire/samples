@@ -5,10 +5,10 @@ This example demonstrates how to use dynamic constraints in a CAP application. I
 
 ### Prerequisites
 
-You've setup the [_cap/samples_](https://github.com/sap-samples/cloud-cap-samples) like so:
+You've setup the [_cap/samples_](https://github.com/capire/samples) like so:
 
 ```sh
-git clone -q https://github.com/capire/samples cap/samples
+git clone -b dynamic-constraints -q https://github.com/capire/samples cap/samples
 cd cap/samples
 npm install
 ```
