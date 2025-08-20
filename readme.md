@@ -4,7 +4,7 @@
 
 Find here a collection of samples for the [SAP Cloud Application Programming Model](https://cap.cloud.sap) organized in a simplistic [monorepo setup](about/samples.md#all-in-one-monorepo).
 
-![](https://github.com/SAP-samples/cloud-cap-samples/workflows/CI/badge.svg)
+![](https://github.com/capire/samples/workflows/CI/badge.svg)
 
 ## Get Started
 
