@@ -45,7 +45,7 @@ After the jumpstart, have a look into the enclosed sub folders/projects, which a
 
 ## Get Help
 
-- Visit the [*capire* docs](https://cap.cloud.sap) to learn about CAP, ...
+- Visit the [*capire* docs](https://cap.cloud.sap) to learn about CAP.
 - especially [*Getting Started in a Nutshell*](https://cap.cloud.sap/docs/get-started/in-a-nutshell).
 - Visit our [*SAP Community*](https://answers.sap.com/tags/9f13aee1-834c-4105-8e43-ee442775e5ce) to ask questions.
 
