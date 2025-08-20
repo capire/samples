@@ -5,6 +5,9 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+
 jobs:
   tests:
     uses: capire/samples/.github/workflows/test.yaml@main
