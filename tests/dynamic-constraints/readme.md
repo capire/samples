@@ -21,10 +21,17 @@ Test like that in `cds.repl` from _cap/samples_ root:
 cds repl --run tests/dynamic-constraints
 ````
 
-```javascript
+```js
 await AdminService.create ('Books', {})
 await AdminService.create ('Books', { title:'   ', author_ID:150 })
 await AdminService.create ('Books', { title:'x' })
+```
+
+```js
 await cds.validate (Books.constraints, 201)
 await cds.validate (Books.constraints)
+```
+
+```js
+await AdminService.read `ID, title, price, fc.price from Books`
 ```
