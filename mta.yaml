@@ -33,6 +33,7 @@ modules:
       - name: samples-messaging
       - name: samples-db
       - name: samples-auth
+      - name: samples-logging
 
   - name: reviews-srv
     type: nodejs
@@ -53,6 +54,7 @@ modules:
       - name: samples-messaging
       - name: samples-db
       - name: samples-auth
+      - name: samples-logging
 
   - name: bookstore-srv
     type: nodejs
@@ -77,6 +79,7 @@ modules:
       - name: samples-db
       - name: samples-auth
       - name: samples-destination
+      - name: samples-logging
 
   - name: samples-db-deployer
     type: hdb
@@ -113,6 +116,7 @@ modules:
           url: ~{srv-url}
           forwardAuthToken: true
       - name: samples-auth
+      - name: samples-logging
 
   - name: destination-content
     type: com.sap.application.content
@@ -176,3 +180,8 @@ resources:
     parameters:
       service: destination
       service-plan: lite
+  - name: samples-logging
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: application-logs
+      service-plan: standard
