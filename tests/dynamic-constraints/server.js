@@ -6,7 +6,7 @@
 const cds = require('@sap/cds'); require('./validate.js')
 cds.on('served', ()=> {
   const { AdminService } = cds.services
-  AdminService.after (['CREATE','UPDATE'], (result,req) =>  cds.validate (req.subject, result))
+  AdminService.after (['CREATE','UPDATE'], (_,req) =>  cds.validate (req))
 })
 
 

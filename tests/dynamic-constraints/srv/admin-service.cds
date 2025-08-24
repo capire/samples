@@ -5,7 +5,7 @@ annotate AdminService with @odata.draft.enabled;
 annotate AdminService with @requires: false;
 
 extend AdminService.Authors with columns {
-  null as books // to simulate the exclusion of books
+  // null as books // to simulate the exclusion of books
 }
 
 // Should be provided by CAP ootb:
