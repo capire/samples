@@ -2,7 +2,8 @@ using { sap.capire.bookshop.Books } from '@capire/bookshop';
 
 // @mandatory
 // @readonly
-// @hidden / visible / inapplicable
+// @hidden @visible @inapplicable
+
 // @assert.range
 // @assert.format
 // @assert.target
