@@ -1,7 +1,20 @@
 using { sap.capire.bookshop.Books } from '@capire/bookshop';
 
+// @mandatory
+// @readonly
+// @hidden / visible / inapplicable
+// @assert.range
+// @assert.format
+// @assert.target
+
 // Following are invariant constraints declared on domain model entity
 annotate Books with {
+
+  // manual two-step mandatory constraint
+  // title @assert.constraint: {
+  //   not_null: { condition: (title is not null), message: 'is missing' },
+  //   not_empty: { condition: (trim(title) != ''), message: 'must not be empty' },
+  // };
 
   // manual two-step mandatory constraint
   title @assert: (case
@@ -11,7 +24,7 @@ annotate Books with {
 
   // range check
   stock @assert: (case
-    when stock < 0 then 'must not be negative'
+    when stock <= 0 then 'must not a positive number'
   end);
 
   // range check
@@ -35,13 +48,16 @@ annotate Books with {
 annotate AdminService.Books with {
 
   author @assert: (case
-    when sum(author.books.price) > 111 then author.name || ' already earned too much with his/her books'
+    when sum(author.books.price) > 111 then author.name || ' already earned too much with their books'
     when count(author.books.ID) -1 > 1 then author.name || ' already wrote too many books'
     // FIXME: ^^^^^^^^^^^^^^^^ cqn4sql doesn't support count(author.books) yet
   end);
+
+  price @mandatory: (exists author.books.genre[name = 'Drama']);
 
   price @assert: (case
     when price is null and exists author.books.genre[name = 'Drama']
     then 'Price must be specified for books by drama queens'
   end);
+
 }
