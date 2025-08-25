@@ -29,24 +29,32 @@ annotate Books with {
 
   // range check
   price @assert: (case
+    // when price is not null and not price between 0 and 500 then 'must be between 0 and 500'
     when price <= 0 or price > 500 then 'must be between 0 and 500'
-   end);
+  end);
 
   // assert target check
-  genre @assert: (case
-    when genre is not null and not exists genre then 'does not exist'
-   end);
+  // genre @assert: (case
+  //   when genre is not null and not exists genre then 'does not exist'
+  // end);
 
-  // multiple constraints: mandatory + assert target + special
+  genre @assert: (case
+    when genre is null then null // genre may be null
+    when not exists genre then 'does not exist'
+  end);
+
+  // multiple constraints: mandatory + assert target, ...
   author @assert: (case
     when author is null then 'is missing'
     when not exists author then 'does not exist'
   end);
 }
 
+
 // Following need to go on service-level entity, as rewriting would fail for CatalogService
 annotate AdminService.Books with {
 
+  // ... + special
   author @assert: (case
     when sum(author.books.price) > 111 then author.name || ' already earned too much with their books'
     when count(author.books.ID) -1 > 1 then author.name || ' already wrote too many books'
