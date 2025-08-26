@@ -2,7 +2,7 @@
 
 # Welcome to cap/samples
 
-Find here a collection of samples for the [SAP Cloud Application Programming Model](https://cap.cloud.sap) organized in a simplistic [monorepo setup](about/samples.md#all-in-one-monorepo).
+Find here a collection of samples for the [SAP Cloud Application Programming Model](https://cap.cloud.sap) organized in a simple [monorepo setup](about/samples.md#all-in-one-monorepo).
 
 ![](https://github.com/capire/samples/workflows/Tests/badge.svg)
 
@@ -31,7 +31,7 @@ Click on the *[/vue](http:/localhost:4004/vue)* link at the top to display the b
 
 After the jumpstart, have a look into the enclosed sub folders/projects, which are:
 
-- [bookshop](bookshop) – a simplistic [primer app](https://cap.cloud.sap/docs/get-started/in-a-nutshell)
+- [bookshop](bookshop) – a simple [primer app](https://cap.cloud.sap/docs/get-started/in-a-nutshell)
 - [reviews](reviews) - a generic reuse service
 - [orders](orders) - a generic reuse service
 - [common](common) - a reuse content package
@@ -46,7 +46,7 @@ After the jumpstart, have a look into the enclosed sub folders/projects, which a
 ## Get Help
 
 - Visit the [*capire* docs](https://cap.cloud.sap) to learn about CAP.
-- especially [*Getting Started in a Nutshell*](https://cap.cloud.sap/docs/get-started/in-a-nutshell).
+- Especially [*Getting Started in a Nutshell*](https://cap.cloud.sap/docs/get-started/in-a-nutshell).
 - Visit our [*SAP Community*](https://answers.sap.com/tags/9f13aee1-834c-4105-8e43-ee442775e5ce) to ask questions.
 
 
