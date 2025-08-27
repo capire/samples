@@ -27,6 +27,7 @@ on:
 
 permissions:
   contents: read
+  deployments: write
 
 concurrency:
   group: cf-${{ github.workflow }}-${{ github.head_ref || github.run_id }}
