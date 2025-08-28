@@ -13,6 +13,7 @@ Assumed you did your [initial setup of CAP Node.js](https://cap.cloud.sap/docs/g
 ```sh
 git clone -j11 -q --recursive https://github.com/capire/samples cap/samples
 cd cap/samples
+git submomdule init
 npm run latest
 npm install
 npm test
