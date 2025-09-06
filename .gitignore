@@ -11,3 +11,7 @@
 
 **/@types
 **/@cds-models
+
+# local nesting of projects
+/xflights
+/xtravels
