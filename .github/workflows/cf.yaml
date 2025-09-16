@@ -3,27 +3,18 @@ name: Cloud Foundry
 on:
   workflow_call:
     inputs:
-      cf-api:
-        description: 'Cloud Foundry API endpoint'
-        required: false
-        type: string
-      cf-org:
-        description: 'Cloud Foundry organization'
-        required: false
-        type: string
-      cf-space:
-        description: 'Cloud Foundry space'
-        required: false
-        type: string
       environment:
-        description: 'Deployment environment name'
-        required: true
+        default: Staging
         type: string
 
   workflow_dispatch:
   push:
     branches:
       - main
+
+permissions:
+  contents: read
+  deployments: write
 
 concurrency:
   group: cf-${{ github.workflow }}-${{ github.head_ref || github.run_id }}
@@ -36,26 +27,21 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           submodules: true
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
       - uses: ./.github/actions/cf-setup
         with:
-          cf-api: ${{ inputs.cf-api || vars.CF_API }}
-          cf-org: ${{ inputs.cf-org || vars.CF_ORG }}
-          cf-space: ${{ inputs.cf-space || vars.CF_SPACE }}
+          cf-api: ${{ vars.CF_API }}
+          cf-org: ${{ vars.CF_ORG }}
+          cf-space: ${{ vars.CF_SPACE }}
           cf-username: ${{ vars.CF_USERNAME }}
           cf-password: ${{ secrets.CF_PASSWORD }}
       - run: npm clean-install
       - run: npx cds up
-
-      - uses: ./.github/actions/cf-github-deploy
-        with:
-          app-name: ${{ env.APP_NAME }}
-          environment: ${{ inputs.environment || 'Staging' }}
 
       - run: cf logs ${{ env.APP_NAME }} --recent
         if: always()
@@ -67,3 +53,13 @@ jobs:
         if: always()
       - run: cf logs ${{ env.APP_NAME }}-db-deployer --recent
         if: always()
+
+      - name: Get application URL
+        id: route
+        shell: bash
+        run: |
+          host=$(cf app "${APP_NAME}" | awk '/routes:/ {print $2}' | sed -E 's#^https?://##; s/,.*$//')
+          echo "url=https://$host" >> "$GITHUB_OUTPUT"
+    environment:
+      name: ${{ inputs.environment || 'Staging' }}
+      url:  ${{ steps.route.outputs.url }}

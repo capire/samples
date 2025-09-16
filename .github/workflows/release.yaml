@@ -5,6 +5,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+  deployments: write
+
 jobs:
   tests:
     uses: capire/samples/.github/workflows/test.yaml@main
@@ -15,7 +19,4 @@ jobs:
     uses: capire/samples/.github/workflows/cf.yaml@main
     secrets: inherit
     with:
-      cf-api: ${{ vars.CF_API_PRODUCTION }}
-      cf-org: ${{ vars.CF_ORG_PRODUCTION }}
-      cf-space: ${{ vars.CF_SPACE_PRODUCTION }}
       environment: Production
