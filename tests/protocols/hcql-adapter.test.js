@@ -1,5 +1,5 @@
 const cds = require('@sap/cds/lib')
-const { GET, expect, axios } = cds.test(__dirname)
+const { GET, POST, DELETE, expect, axios } = cds.test(__dirname)
 
 // Fetch API disallows GET|HEAD requests with body
 if (axios.constructor.name === 'Naxios') it = it.skip
@@ -121,6 +121,34 @@ describe ('Sluggified variants', () => {
       data: `{ title, author.name as author }`
     })
     expect(b2).to.deep.equal ({ title: "Wuthering Heights", author: "Emily Brontë" })
+  })
+
+})
+
+
+describe ('CREATE', () => {
+
+  it ('creates entities', async () => {
+    let res = await POST ('/hcql/admin/Books', { title: "Neuromancer", author_ID: 101 })
+    expect(res.status).to.equal(201)
+    expect(res.data).to.have.property('ID') // server-generated ID
+  })
+
+})
+
+describe ('DELETE', () => {
+
+  it ('deletes single entities with affected rows as result', async () => {
+    let res = await DELETE ('/hcql/admin/Books/201')
+    expect(res.status).to.equal(200)
+    expect(res.data).to.equal(1) // 1 affected row
+  })
+
+  it ('deletes multiple entities with affected rows as result', async () => {
+    const { DELETE } = cds.ql
+    let res = await POST ('/hcql/admin', DELETE.from ('Books').where ({ ID: { '>': 250 } }))
+    expect(res.status).to.equal(200)
+    expect(res.data).to.equal(3) // 3 affected rows
   })
 
 })
