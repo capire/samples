@@ -139,7 +139,7 @@ describe ('CREATE', () => {
 describe ('DELETE', () => {
 
   it ('deletes single entities with affected rows as result', async () => {
-    let res = await DELETE ('/hcql/admin/Books/201')
+    let res = await DELETE `/hcql/admin/Books/201`
     expect(res.status).to.equal(200)
     expect(res.data).to.equal(1) // 1 affected row
   })
