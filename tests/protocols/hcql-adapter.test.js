@@ -146,7 +146,7 @@ describe ('DELETE', () => {
 
   it ('deletes multiple entities with affected rows as result', async () => {
     const { DELETE } = cds.ql
-    let res = await POST ('/hcql/admin', DELETE.from ('Books').where ({ ID: { '<': 250 } }))
+    let res = await POST ('/hcql/admin', DELETE.from `Books` .where `author.name = 'Edgar Allen Poe'`)
     expect(res.status).to.equal(200)
     expect(res.data).to.equal(2) // 2 affected rows
   })
