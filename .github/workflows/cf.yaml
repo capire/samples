@@ -40,7 +40,7 @@ jobs:
           cf-space: ${{ vars.CF_SPACE }}
           cf-username: ${{ vars.CF_USERNAME }}
           cf-password: ${{ secrets.CF_PASSWORD }}
-      - run: npm clean-install
+      - run: npm install
       - run: npx cds up
 
       - run: cf logs ${{ env.APP_NAME }} --recent
