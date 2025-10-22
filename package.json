@@ -19,7 +19,7 @@
     "orders": "cds watch orders",
     "reviews": "cds watch reviews",
     "lint": "npx eslint",
-    "test": "npx jest",
+    "test": "chest",
     "jest": "npx jest",
     "mocha": "npx mocha",
     "node:test": "node --test",
