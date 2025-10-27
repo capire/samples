@@ -16,16 +16,26 @@ describe('cap/samples - Bookshop APIs', () => {
     expect(data).to.contain('<Annotation Term="Common.Label" String="Currency"/>')
   })
 
-  it('serves ListOfBooks?$expand=genre,currency', async () => {
+  it('serves Books?$expand=genre,currency', async () => {
     const Mystery = { name: 'Mystery' }
     const Romance = { name: 'Romance' }
     const USD = { code: 'USD', name: 'US Dollar', descr: null, symbol: '$' }
-    const { data } = await GET `/browse/ListOfBooks ${{
+    const { data } = await GET `/browse/Books ${{
       params: { $search: 'Po', $select: `title,author`, $expand:`genre,currency` },
     }}`
     expect(data.value).to.containSubset([
       { ID: 251, title: 'The Raven', author: 'Edgar Allen Poe', genre:Mystery, currency:USD  },
       { ID: 252, title: 'Eleonora', author: 'Edgar Allen Poe', genre:Romance, currency:USD  },
+    ])
+  })
+
+  it('serves Books?$select=genre/name,currency/code', async () => {
+    const { data } = await GET `/browse/Books ${{
+      params: { $search: 'Po', $select: `title,author,genre/name,currency/code` },
+    }}`
+    expect(data.value).to.containSubset([
+      { ID: 251, title: 'The Raven', author: 'Edgar Allen Poe', genre_name:'Mystery', currency_code:'USD'  },
+      { ID: 252, title: 'Eleonora', author: 'Edgar Allen Poe', genre_name:'Romance', currency_code:'USD'  },
     ])
   })
 
