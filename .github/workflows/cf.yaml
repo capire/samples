@@ -33,7 +33,7 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22
-      - uses: ./.github/actions/cf-setup
+      - uses: cap-js/cf-setup@v1
         with:
           cf-api: ${{ vars.CF_API }}
           cf-org: ${{ vars.CF_ORG }}
