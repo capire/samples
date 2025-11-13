@@ -1,3 +1,3 @@
 const cds = require ('@sap/cds')
 
-require('@capire/bookstore/server')
+require('@capire/bookstore/server');
