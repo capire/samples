@@ -7,9 +7,24 @@
   "workspaces": [
     "*"
   ],
+  "dependencies": {
+    "@capire/reviews": "*",
+    "@capire/orders": "*",
+    "@capire/bookstore": "*"
+  },
   "devDependencies": {
     "@cap-js/cds-test": "^0",
     "@sap/cds-dk": "^9"
+  },
+  "cds": {
+    "requires": {
+      "ReviewsService": {
+        "impl": "@capire/reviews/srv/reviews-service.js"
+      },
+      "OrdersService": {
+        "impl": "@capire/orders/srv/orders-service.js"
+      }
+    }
   },
   "scripts": {
     "latest": "git submodule -q foreach git checkout -q main",
