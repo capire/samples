@@ -11,7 +11,7 @@ Find here a collection of samples for the [SAP Cloud Application Programming Mod
 Assumed you did your [initial setup of CAP Node.js](https://cap.cloud.sap/docs/get-started/#setup), simply copy & paste these lines to a terminal for a jumpstart:
 
 ```sh
-git clone -j11 -q --recursive https://github.com/capire/samples cap/samples
+git clone -j11 -q --recursive https://github.com/capire/samples cap/samples -b ecosystem-session
 cd cap/samples
 npm run latest
 npm install
@@ -42,6 +42,68 @@ After the jumpstart, have a look into the enclosed sub folders/projects, which a
 <p align="center">
   <img width=480 src="about/samples.drawio.svg">
 </p>
+
+## Run Locally
+
+### ... with mocks
+
+```sh
+cds w bookstore
+```
+
+This shows the mocking of the `OrdersService` in the terminal output like this:
+```
+[cds] - mocking OrdersService {
+  at: [ '/odata/v4/orders' ],
+  decl: 'orders/srv/orders-service.cds:4',
+  impl: 'node_modules/@sap/cds/srv/app-service.js'
+}
+```
+
+The `impl` is the default app-service implementation provided by CAP.
+
+Test it:
+- submit an order at http://localhost:4004/bookshop/
+- see the order appear at http://localhost:4004/odata/v4/orders/Orders
+
+### ... connected
+
+> Just including `DEBUG=all` because it's useful to know it when needed.
+
+```sh
+DEBUG=all cds w orders
+```
+
+```sh
+DEBUG=all cds w bookstore
+```
+
+This shows the connection to the real `OrdersService` in the terminal output like this:
+```
+[cds] - connect to OrdersService > odata { url: 'http://localhost:4006/odata/v4/orders' }
+```
+
+The connection is automatically picked up due to the `~/.cds-services.json` entry created when starting the `orders` service.
+
+
+Test it:
+- submit an order at http://localhost:4004/bookshop/
+- see the order appear at http://localhost:4006/orders/#manage-orders (need to press "Go")
+- delete the order
+- see the stock go up at http://localhost:4004/bookshop/ (refresh the page)
+
+
+### ... as modulith
+
+```sh
+cds w
+```
+
+Test it:
+- submit an order at http://localhost:4004/bookshop/
+- see the order appear at http://localhost:4004/orders/#manage-orders (need to press "Go")
+- delete the order
+- see the stock go up at http://localhost:4004/bookshop/ (refresh the page)
 
 ## Get Help
 
