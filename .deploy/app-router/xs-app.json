@@ -8,37 +8,37 @@
       "cacheControl": "no-cache, no-store, must-revalidate"
     },
     {
-      "source": "^/admin/(.*)$",
+      "source": "^/admin/",
       "destination": "bookstore-api",
       "csrfProtection": true
     },
     {
-      "source": "^/browse/(.*)$",
+      "source": "^/browse/",
       "destination": "bookstore-api",
       "csrfProtection": true
     },
     {
-      "source": "^/user/(.*)$",
+      "source": "^/user/",
       "destination": "bookstore-api",
       "csrfProtection": true
     },
     {
-      "source": "^/odata/v4/orders/(.*)$",
+      "source": "^/odata/v4/orders/",
       "destination": "orders-api",
       "csrfProtection": true
     },
     {
-      "source": "^/reviews/(.*)$",
+      "source": "^/reviews/",
       "destination": "reviews-api",
       "csrfProtection": true
     },
     {
-      "source": "^/rest/catalog/(.*)$",
+      "source": "^/rest/catalog/",
       "destination": "bookstore-api",
       "csrfProtection": true
     },
     {
-      "source": "^/rest/reviews/(.*)$",
+      "source": "^/rest/reviews/",
       "destination": "reviews-api",
       "csrfProtection": true
     }
