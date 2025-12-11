@@ -9,7 +9,7 @@ build-parameters:
     - builder: custom
       commands:
         - npm ci
-        - npx cds build shared-db --for hana --production
+        - npx cds build shared-db --for mtx-sidecar --production
         - npx cds build orders --for nodejs --production --ws-pack
         - npx cds build reviews --for nodejs --production
         - npx cds build bookstore --for nodejs --production --ws-pack
@@ -30,10 +30,16 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
-      - name: samples-messaging
-      - name: samples-db
-      - name: samples-auth
-      - name: samples-logging
+      - name: samples-mt-messaging
+      - name: samples-mt-db
+      - name: samples-mt-auth
+      - name: samples-mt-logging
+      - name: mtx-api
+        group: destinations
+        properties:
+          name: mtx-api
+          url: ~{mtx-url}
+          forwardAuthToken: true
 
   - name: reviews-srv
     type: nodejs
@@ -51,10 +57,16 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
-      - name: samples-messaging
-      - name: samples-db
-      - name: samples-auth
-      - name: samples-logging
+      - name: samples-mt-messaging
+      - name: samples-mt-db
+      - name: samples-mt-auth
+      - name: samples-mt-logging
+      - name: mtx-api
+        group: destinations
+        properties:
+          name: mtx-api
+          url: ~{mtx-url}
+          forwardAuthToken: true
 
   - name: bookstore-srv
     type: nodejs
@@ -75,27 +87,66 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
-      - name: samples-messaging
-      - name: samples-db
-      - name: samples-auth
-      - name: samples-destination
-      - name: samples-logging
+      - name: samples-mt-messaging
+      - name: samples-mt-db
+      - name: samples-mt-auth
+      - name: samples-mt-destination
+      - name: samples-mt-logging
+      - name: mtx-api
+        group: destinations
+        properties:
+          name: mtx-api
+          url: ~{mtx-url}
+          forwardAuthToken: true
 
-  - name: samples-db-deployer
-    type: hdb
-    path: shared-db/gen/db
+  - name: samples-mt-shared-mtx
+    type: nodejs
+    path: shared-db/gen/mtx/sidecar
+    build-parameters:
+      builder: npm-ci
     parameters:
-      buildpack: nodejs_buildpack
+      instances: 1
+      memory: 256M
+      disk-quota: 512M
+    properties:
+      SUBSCRIPTION_URL: ~{app-api/app-protocol}://\${tenant_subdomain}-~{app-api/app-uri}
+    hooks:
+      - name: upgrade-all
+        type: task
+        phases:
+          - blue-green.application.before-start.idle
+          - deploy.application.before-start
+        parameters:
+          name: upgrade
+          memory: 512M # increase as required
+          disk-quota: 768M # increase as required
+          command: cds-mtx upgrade '*'
+    provides:
+      - name: mtx-api
+        properties:
+          mtx-url: ${default-url}
     requires:
-      - name: samples-db
+      - name: samples-mt-messaging
+      - name: samples-mt-db
+      - name: samples-mt-auth
+      - name: samples-mt-registry
+      - name: samples-mt-logging
+      - name: app-api
 
-  - name: samples
+  - name: samples-mt
     type: approuter.nodejs
     path: .deploy/app-router
     parameters:
       keep-existing-routes: true
       disk-quota: 256M
       memory: 256M
+    properties:
+      TENANT_HOST_PATTERN: "^(.*)-${default-uri}"
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
     requires:
       - name: orders-api
         group: destinations
@@ -115,8 +166,8 @@ modules:
           name: bookstore-api # must be used in xs-app.json as well
           url: ~{srv-url}
           forwardAuthToken: true
-      - name: samples-auth
-      - name: samples-logging
+      - name: samples-mt-auth
+      - name: samples-mt-logging
 
   - name: destination-content
     type: com.sap.application.content
@@ -124,11 +175,11 @@ modules:
       - name: orders-api
       - name: reviews-api
       - name: bookstore-api
-      - name: samples-auth
+      - name: samples-mt-auth
         parameters:
           service-key:
             name: xsuaa-service-key
-      - name: samples-destination
+      - name: samples-mt-destination
         parameters:
           content-target: true
     build-parameters:
@@ -141,16 +192,16 @@ modules:
             - Name: orders-dest
               URL: ~{orders-api/srv-url}
               Authentication: OAuth2ClientCredentials
-              TokenServiceInstanceName: samples-auth
+              TokenServiceInstanceName: samples-mt-auth
               TokenServiceKeyName: xsuaa-service-key
             - Name: reviews-dest
               URL: ~{reviews-api/srv-url}
               Authentication: OAuth2ClientCredentials
-              TokenServiceInstanceName: samples-auth
+              TokenServiceInstanceName: samples-mt-auth
               TokenServiceKeyName: xsuaa-service-key
 
 resources:
-  - name: samples-messaging
+  - name: samples-mt-messaging
     type: org.cloudfoundry.managed-service
     parameters:
       service: enterprise-messaging
@@ -158,30 +209,77 @@ resources:
       path: .deploy/event-mesh.json
       config:
         emname: bookstore-${org}-${space}
-        namespace: cap/samples/${space}
-  - name: samples-db
-    type: com.sap.xs.hdi-container
-    parameters:
-      service: hana
-      service-plan: hdi-shared
-  - name: samples-auth
+        namespace: cap/samples-mt/${space}
+  - name: samples-mt-auth
     type: org.cloudfoundry.managed-service
     processed-after:
-      - samples-messaging
+      - samples-mt-messaging
     parameters:
       service: xsuaa
       service-plan: application
       path: .deploy/xs-security.json
       config:
-        xsappname: samples-${org}-${space}
-        tenant-mode: dedicated
-  - name: samples-destination
+        xsappname: samples-mt-${org}-${space}
+        tenant-mode: shared
+        oauth2-configuration:
+          credential-types:
+            - "binding-secret"
+            - "x509"
+        role-collections:
+          - name: 'admin (samples-mt ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.admin'
+          - name: 'cds.ExtensionDeveloper (samples-mt ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.cds.ExtensionDeveloper'
+          - name: 'cds.Subscriber (samples-mt ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.cds.Subscriber'
+          - name: 'mtcallback (samples-mt ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.mtcallback'
+          - name: 'cds.Developer (samples-mt ${org}-${space})'
+            description: 'generated'
+            role-template-references:
+              - '$XSAPPNAME.cds.Developer'
+  - name: samples-mt-destination
     type: org.cloudfoundry.managed-service
     parameters:
       service: destination
       service-plan: lite
-  - name: samples-logging
+  - name: samples-mt-logging
     type: org.cloudfoundry.managed-service
     parameters:
       service: application-logs
       service-plan: lite
+      resources:
+  - name: samples-mt-registry
+    type: org.cloudfoundry.managed-service
+    requires:
+      - name: mtx-api
+      - name: samples-mt-auth
+    parameters:
+      service: saas-registry
+      service-plan: application
+      config:
+        xsappname: samples-mt-${org}-${space}
+        appName: samples-mt-${org}-${space}
+        displayName: samples-mt
+        description: A simple CAP project.
+        category: 'Category'
+        appUrls:
+          getDependencies: ~{mtx-api/mtx-url}/-/cds/saas-provisioning/dependencies
+          onSubscription: ~{mtx-api/mtx-url}/-/cds/saas-provisioning/tenant/{tenantId}
+          onSubscriptionAsync: true
+          onUnSubscriptionAsync: true
+          onUpdateDependenciesAsync: true
+          callbackTimeoutMillis: 300000 # Increase if your deployments are taking longer than that
+  - name: samples-mt-db
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: service-manager
+      service-plan: container

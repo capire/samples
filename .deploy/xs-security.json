@@ -8,12 +8,31 @@
       "name": "$XSAPPNAME.emcallback",
       "description": "Enterprise-Messaging Callback Access",
       "grant-as-authority-to-apps": [
-        "$XSSERVICENAME(samples-messaging)"
+        "$XSSERVICENAME(samples-mt-messaging)"
       ]
     },
     {
       "name": "$XSAPPNAME.emmanagement",
       "description": "Enterprise-Messaging Management Access"
+    },
+    {
+      "name": "$XSAPPNAME.cds.ExtensionDeveloper",
+      "description": "cds.ExtensionDeveloper"
+    },
+    {
+      "name": "$XSAPPNAME.cds.Subscriber",
+      "description": "cds.Subscriber"
+    },
+    {
+      "name": "$XSAPPNAME.mtcallback",
+      "description": "mtcallback",
+      "grant-as-authority-to-apps": [
+        "$XSAPPNAME(application,sap-provisioning,tenant-onboarding)"
+      ]
+    },
+    {
+      "name": "$XSAPPNAME.cds.Developer",
+      "description": "cds.Developer"
     }
   ],
   "attributes": [],
@@ -24,6 +43,45 @@
         "$XSAPPNAME.admin"
       ],
       "description": "capire/samples bookstore admin"
+    },
+    {
+      "name": "cds.ExtensionDeveloper",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.cds.ExtensionDeveloper"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "cds.Subscriber",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.cds.Subscriber"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "mtcallback",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.mtcallback"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "cds.Developer",
+      "description": "generated",
+      "scope-references": [
+        "$XSAPPNAME.cds.Developer"
+      ],
+      "attribute-references": []
+    },
+    {
+      "name": "ExtensionDeveloper",
+      "description": "Extension development including UIFlex extensibility",
+      "scope-references": [
+        "$XSAPPNAME.cds.ExtensionDeveloper"
+      ]
     }
   ],
   "authorities-inheritance": false,
