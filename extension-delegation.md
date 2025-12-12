@@ -17,4 +17,3 @@ Support for asynchronous extension requests requires further investigation and w
 Every microservice contains a `cds.xt.RemoteExtensiblityService` (see [remote-extensibility-service.cds](https://github.com/capire/reviews/blob/remote-extend/srv/remote-extensibility-service.cds)) that is configured in [package.json](https://github.com/capire/reviews/blob/remote-extend/package.json)
 
 In addition, a handler implementation for `cds.xt.ExtensibilityService` redirects the requests to the `cds.xt.RemoteExtensiblityService` (see [delegating-extensibility-service.js](https://github.com/capire/reviews/blob/remote-extend/srv/delegating-extensibility-service.js))
-
