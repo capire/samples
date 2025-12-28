@@ -44,7 +44,7 @@ describe('cap/samples - Consuming Services locally', () => {
         ],
       },
       {
-        name: 'Edgar Allen Poe',
+        name: 'Edgar Allan Poe',
         books: [
           { title: 'The Raven', currency: { name: 'US Dollar', symbol: '$' } },
           { title: 'Eleonora', currency: { name: 'US Dollar', symbol: '$' } },

@@ -24,8 +24,8 @@ describe('cap/samples - Bookshop APIs', () => {
       params: { $search: 'Po', $select: `title,author`, $expand:`genre,currency` },
     }}`
     expect(data.value).to.containSubset([
-      { ID: 251, title: 'The Raven', author: 'Edgar Allen Poe', genre:Mystery, currency:USD  },
-      { ID: 252, title: 'Eleonora', author: 'Edgar Allen Poe', genre:Romance, currency:USD  },
+      { ID: 251, title: 'The Raven', author: 'Edgar Allan Poe', genre:Mystery, currency:USD },
+      { ID: 252, title: 'Eleonora', author: 'Edgar Allan Poe', genre:Romance, currency:USD },
     ])
   })
 
@@ -34,8 +34,8 @@ describe('cap/samples - Bookshop APIs', () => {
       params: { $search: 'Po', $select: `title,author,genre/name,currency/code` },
     }}`
     expect(data.value).to.containSubset([
-      { ID: 251, title: 'The Raven', author: 'Edgar Allen Poe', genre_name:'Mystery', currency_code:'USD'  },
-      { ID: 252, title: 'Eleonora', author: 'Edgar Allen Poe', genre_name:'Romance', currency_code:'USD'  },
+      { ID: 251, title: 'The Raven', author: 'Edgar Allan Poe', genre_name:'Mystery', currency_code:'USD'  },
+      { ID: 252, title: 'Eleonora', author: 'Edgar Allan Poe', genre_name:'Romance', currency_code:'USD'  },
     ])
   })
 
@@ -48,8 +48,8 @@ describe('cap/samples - Bookshop APIs', () => {
       expect(data.value).to.containSubset([
         { ID: 201, title: 'Wuthering Heights', author: 'Emily Brontë' },
         { ID: 207, title: 'Jane Eyre', author: 'Charlotte Brontë' },
-        { ID: 251, title: 'The Raven', author: 'Edgar Allen Poe' },
-        { ID: 252, title: 'Eleonora', author: 'Edgar Allen Poe' },
+        { ID: 251, title: 'The Raven', author: 'Edgar Allan Poe' },
+        { ID: 252, title: 'Eleonora', author: 'Edgar Allan Poe' },
       ])
     })
 
@@ -76,7 +76,7 @@ describe('cap/samples - Bookshop APIs', () => {
       expect(data.value).to.containSubset([
         { name: 'Emily Brontë', books: [{ title: 'Wuthering Heights' }] },
         { name: 'Charlotte Brontë', books: [{ title: 'Jane Eyre' }] },
-        { name: 'Edgar Allen Poe', books: [{ title: 'The Raven' }, { title: 'Eleonora' }] },
+        { name: 'Edgar Allan Poe', books: [{ title: 'The Raven' }, { title: 'Eleonora' }] },
         { name: 'Richard Carpenter', books: [{ title: 'Catweazle' }] },
       ])
     })

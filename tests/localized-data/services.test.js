@@ -16,8 +16,8 @@ describe('cap/samples - Localized Data', () => {
     expect(data.value).to.containSubset([
       { title: 'Sturmhöhe', author: 'Emily Brontë' },
       { title: 'Jane Eyre', author: 'Charlotte Brontë' },
-      { title: 'The Raven', author: 'Edgar Allen Poe' },
-      { title: 'Eleonora', author: 'Edgar Allen Poe' },
+      { title: 'The Raven', author: 'Edgar Allan Poe' },
+      { title: 'Eleonora', author: 'Edgar Allan Poe' },
       { title: 'Catweazle', author: 'Richard Carpenter' },
     ])
   })
@@ -29,8 +29,8 @@ describe('cap/samples - Localized Data', () => {
     expect(data.value).to.containSubset([
       { title: 'Sturmhöhe', author: 'Emily Brontë', currency: { name: 'Pfund' } },
       { title: 'Jane Eyre', author: 'Charlotte Brontë', currency: { name: 'Pfund' } },
-      { title: 'The Raven', author: 'Edgar Allen Poe', currency: { name: 'US-Dollar' } },
-      { title: 'Eleonora', author: 'Edgar Allen Poe', currency: { name: 'US-Dollar' } },
+      { title: 'The Raven', author: 'Edgar Allan Poe', currency: { name: 'US-Dollar' } },
+      { title: 'Eleonora', author: 'Edgar Allan Poe', currency: { name: 'US-Dollar' } },
       { title: 'Catweazle', author: 'Richard Carpenter', currency: { name: 'Yen' } },
     ])
   })
@@ -55,7 +55,7 @@ describe('cap/samples - Localized Data', () => {
         books: [{ title: 'Sturmhöhe', currency: { name: 'Pfund', symbol: '£' } }],
       },
       {
-        name: 'Edgar Allen Poe',
+        name: 'Edgar Allan Poe',
         books: [
           { title: 'The Raven', currency: { name: 'US-Dollar', symbol: '$' } },
           { title: 'Eleonora',  currency: { name: 'US-Dollar', symbol: '$' } },

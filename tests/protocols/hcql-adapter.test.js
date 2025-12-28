@@ -47,7 +47,7 @@ describe ('GET w/ query in body', () => {
         ]
       },
       {
-        name: "Edgar Allen Poe",
+        name: "Edgar Allan Poe",
         books: [
           { title: "Eleonora", genre: 'Romance' },
           { title: "The Raven", genre: 'Mystery' },
@@ -85,8 +85,8 @@ describe ('Sluggified variants', () => {
     expect(books).to.deep.equal ([
       { title: "Wuthering Heights", author: "Emily Brontë" },
       { title: "Jane Eyre", author: "Charlotte Brontë" },
-      { title: "The Raven", author: "Edgar Allen Poe" },
-      { title: "Eleonora", author: "Edgar Allen Poe" },
+      { title: "The Raven", author: "Edgar Allan Poe" },
+      { title: "Eleonora", author: "Edgar Allan Poe" },
       { title: "Catweazle", author: "Richard Carpenter" }
     ])
   })
@@ -146,7 +146,7 @@ describe ('DELETE', () => {
 
   it ('deletes multiple entities with affected rows as result', async () => {
     const { DELETE } = cds.ql
-    let res = await POST ('/hcql/admin', DELETE.from `Books` .where `author.name = 'Edgar Allen Poe'`)
+    let res = await POST ('/hcql/admin', DELETE.from `Books` .where `author.name = 'Edgar Allan Poe'`)
     expect(res.status).to.equal(200)
     expect(res.data).to.equal(2) // 2 affected rows
   })
