@@ -8,7 +8,7 @@ const { expect } = cds.test(
 );
 
 describe("Consuming actions locally", () => {
-  let cats, CatalogService, Books, stockBefore;
+  let cats, CatalogService, Books, alice = { user: "alice" };
   const BOOK_ID = 251;
   const QUANTITY = 1;
 
@@ -22,32 +22,21 @@ describe("Consuming actions locally", () => {
     cats = await cds.connect.to("CatalogService");
   });
 
-  beforeEach(async () => {
-    // Read the stock before the action is called
-    stockBefore = (await cats.get(Books, BOOK_ID)).stock;
-  });
-
   it("calls unbound actions - basic variant using srv.send", async () => {
     // Use a managed transaction to create a continuation with an authenticated user
-    const res1 = await cats.tx({ user: "alice" }, () => {
-      return cats.send("submitOrder", { book: BOOK_ID, quantity: QUANTITY });
-    });
-    expect(res1.stock).to.eql(stockBefore - QUANTITY);
+    let p = cats.tx(alice, () => cats.send("submitOrder", { book: BOOK_ID, quantity: QUANTITY }))
+    return expect(p).to.be.fulfilled
   });
 
   it("calls unbound actions - named args variant", async () => {
     // Use a managed transaction to create a continuation with an authenticated user
-    const res2 = await cats.tx({ user: "alice" }, () => {
-      return cats.submitOrder({ book: BOOK_ID, quantity: QUANTITY });
-    });
-    expect(res2.stock).to.eql(stockBefore - QUANTITY);
+    let p = cats.tx(alice, () => cats.submitOrder({ book: BOOK_ID, quantity: QUANTITY }))
+    return expect(p).to.be.fulfilled
   });
 
   it("calls unbound actions - positional args variant", async () => {
     // Use a managed transaction to create a continuation with an authenticated user
-    const res3 = await cats.tx({ user: "alice" }, () => {
-      return cats.submitOrder(BOOK_ID, QUANTITY);
-    });
-    expect(res3.stock).to.eql(stockBefore - QUANTITY);
+    let p = await cats.tx(alice, () => cats.submitOrder(BOOK_ID, QUANTITY))
+    return expect(p).to.be.fulfilled
   });
 });

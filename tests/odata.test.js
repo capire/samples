@@ -16,26 +16,24 @@ describe('cap/samples - Bookshop APIs', () => {
     expect(data).to.contain('<Annotation Term="Common.Label" String="Currency"/>')
   })
 
-  it('serves Books?$expand=genre,currency', async () => {
-    const Mystery = { name: 'Mystery' }
-    const Romance = { name: 'Romance' }
+  it('serves Books?$expand=currency', async () => {
     const USD = { code: 'USD', name: 'US Dollar', descr: null, symbol: '$' }
     const { data } = await GET `/browse/Books ${{
-      params: { $search: 'Po', $select: `title,author`, $expand:`genre,currency` },
+      params: { $search: 'Po', $select: `title,author,genre`, $expand:`currency` },
     }}`
     expect(data.value).to.containSubset([
-      { ID: 251, title: 'The Raven', author: 'Edgar Allan Poe', genre:Mystery, currency:USD },
-      { ID: 252, title: 'Eleonora', author: 'Edgar Allan Poe', genre:Romance, currency:USD },
+      { ID: 251, title: 'The Raven', author: 'Edgar Allan Poe', genre:'Mystery', currency:USD },
+      { ID: 252, title: 'Eleonora', author: 'Edgar Allan Poe', genre:'Romance', currency:USD },
     ])
   })
 
-  it('serves Books?$select=genre/name,currency/code', async () => {
+  it('serves Books?$select=currency/code', async () => {
     const { data } = await GET `/browse/Books ${{
-      params: { $search: 'Po', $select: `title,author,genre/name,currency/code` },
+      params: { $search: 'Po', $select: `title,author,genre,currency/code` },
     }}`
     expect(data.value).to.containSubset([
-      { ID: 251, title: 'The Raven', author: 'Edgar Allan Poe', genre_name:'Mystery', currency_code:'USD'  },
-      { ID: 252, title: 'Eleonora', author: 'Edgar Allan Poe', genre_name:'Romance', currency_code:'USD'  },
+      { ID: 251, title: 'The Raven', author: 'Edgar Allan Poe', genre:'Mystery', currency_code:'USD' },
+      { ID: 252, title: 'Eleonora', author: 'Edgar Allan Poe', genre:'Romance', currency_code:'USD' },
     ])
   })
 
@@ -71,7 +69,7 @@ describe('cap/samples - Bookshop APIs', () => {
         params: {
           $select: `name`,
           $expand: `books($select=title)`,
-        },
+       },
       })
       expect(data.value).to.containSubset([
         { name: 'Emily Brontë', books: [{ title: 'Wuthering Heights' }] },
