@@ -36,7 +36,7 @@ describe("Consuming actions locally", () => {
 
   it("calls unbound actions - positional args variant", async () => {
     // Use a managed transaction to create a continuation with an authenticated user
-    let p = await cats.tx(alice, () => cats.submitOrder(BOOK_ID, QUANTITY))
+    let p = cats.tx(alice, () => cats.submitOrder(BOOK_ID, QUANTITY))
     return expect(p).to.be.fulfilled
   });
 });
