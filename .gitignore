@@ -2,7 +2,7 @@
 **/_out
 **/mta_archives
 **/node_modules
-package-lock.json
+**/package-lock.json
 
 **/.DS_Store
 **/*.sqlite
