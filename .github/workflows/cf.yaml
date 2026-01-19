@@ -27,13 +27,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           submodules: true
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
-      - uses: cap-js/cf-setup@v1
+      - uses: cap-js/cf-setup@v2
         with:
           api: ${{ vars.CF_API }}
           org: ${{ vars.CF_ORG }}
