@@ -35,11 +35,11 @@ jobs:
           node-version: 22
       - uses: cap-js/cf-setup@v1
         with:
-          cf-api: ${{ vars.CF_API }}
-          cf-org: ${{ vars.CF_ORG }}
-          cf-space: ${{ vars.CF_SPACE }}
-          cf-username: ${{ vars.CF_USERNAME }}
-          cf-password: ${{ secrets.CF_PASSWORD }}
+          api: ${{ vars.CF_API }}
+          org: ${{ vars.CF_ORG }}
+          space: ${{ vars.CF_SPACE }}
+          username: ${{ vars.CF_USERNAME }}
+          password: ${{ secrets.CF_PASSWORD }}
       - run: npm install
       - run: npx cds up
 
