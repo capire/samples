@@ -8,7 +8,7 @@
     "*"
   ],
   "devDependencies": {
-    "@cap-js/cds-test": "^0",
+    "@cap-js/cds-test": "^0 || ^1",
     "@sap/cds-dk": "^9"
   },
   "scripts": {
