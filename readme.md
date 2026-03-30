@@ -11,6 +11,7 @@ Assumed you did your [initial setup of CAP Node.js](https://cap.cloud.sap/docs/g
 ```sh
 git clone --recurse-submodules https://github.com/capire/samples cap/samples
 cd cap/samples
+npm run latest
 npm install
 npm test
 npm start
