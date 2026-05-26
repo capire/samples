@@ -8,8 +8,8 @@
     "*"
   ],
   "devDependencies": {
-    "@cap-js/cds-test": "^0 || ^1",
-    "@sap/cds-dk": "^9"
+    "@cap-js/cds-test": "^1",
+    "@sap/cds-dk": ">=9"
   },
   "scripts": {
     "latest": "git submodule -q foreach git checkout -q main",
