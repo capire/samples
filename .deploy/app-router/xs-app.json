@@ -14,12 +14,6 @@
       "csrfProtection": true
     },
     {
-      "source": "^/browse/(.*)$",
-      "target": "/browse/$1",
-      "destination": "bookstore-api",
-      "csrfProtection": true
-    },
-    {
       "source": "^/user/(.*)$",
       "target": "/user/$1",
       "destination": "bookstore-api",
@@ -38,8 +32,8 @@
       "csrfProtection": true
     },
     {
-      "source": "^/rest/catalog/(.*)$",
-      "target": "/rest/catalog/$1",
+      "source": "^/rest/browse/(.*)$",
+      "target": "/rest/browse/$1",
       "destination": "bookstore-api",
       "csrfProtection": true
     },
