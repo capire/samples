@@ -1,6 +1,7 @@
 {
   "workbench.startupEditor": "readme",
   "files.exclude": {
+    "package-lock.json": true,
     "node_modules": true,
     ".reuse": true
   }

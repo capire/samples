@@ -13,12 +13,8 @@
       "csrfProtection": true
     },
     {
-      "source": "^/browse/",
-      "destination": "bookstore-api",
-      "csrfProtection": true
-    },
-    {
-      "source": "^/user/",
+      "source": "^/user/(.*)$",
+      "target": "/user/$1",
       "destination": "bookstore-api",
       "csrfProtection": true
     },
@@ -28,12 +24,14 @@
       "csrfProtection": true
     },
     {
-      "source": "^/reviews/",
+      "source": "^/odata/v4/reviews/(.*)$",
+      "target": "/odata/v4/reviews/$1",
       "destination": "reviews-api",
       "csrfProtection": true
     },
     {
-      "source": "^/rest/catalog/",
+      "source": "^/rest/browse/(.*)$",
+      "target": "/rest/browse/$1",
       "destination": "bookstore-api",
       "csrfProtection": true
     },
