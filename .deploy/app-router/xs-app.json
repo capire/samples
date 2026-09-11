@@ -13,11 +13,6 @@
       "csrfProtection": true
     },
     {
-      "source": "^/user/",
-      "destination": "bookstore-api",
-      "csrfProtection": true
-    },
-    {
       "source": "^/odata/v4/orders/",
       "destination": "orders-api",
       "csrfProtection": true
