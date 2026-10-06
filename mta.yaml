@@ -66,8 +66,8 @@ modules:
       disk-quota: 256M
       memory: 256M
     properties:
-      cds_requires_ReviewsService_credentials: {"destination": "reviews-dest","path": "/odata/v4/reviews"}
-      cds_requires_OrdersService_credentials: {"destination": "orders-dest","path": "/odata/v4/orders"}
+      cds_requires_ReviewsService_credentials: {"destination": "reviews-dest","path": "/hcql/reviews"}
+      cds_requires_OrdersService_credentials: {"destination": "orders-dest","path": "/hcql/orders"}
     build-parameters:
       builder: npm-ci
     provides:
